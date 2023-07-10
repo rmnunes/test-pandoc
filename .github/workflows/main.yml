@@ -13,6 +13,7 @@ jobs:
             echo "test" > test3.md
             echo "files=$(printf '%s ' *.md)" > $GITHUB_OUTPUT
       - run: |
+          echo "${{ steps.test.outputs.files }}"
           FILES=${{ steps.test.outputs.files }}
           for f in $FILES
             do
