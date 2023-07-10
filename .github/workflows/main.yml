@@ -13,7 +13,8 @@ jobs:
             echo "test" > test3.md
             echo "files=$(printf '%s ' *.md)" > $GITHUB_OUTPUT
       - run: |
-          for f in ${{ steps.files_list.outputs.files }}
+          FILES=${{ steps.files_list.outputs.files }}
+          for f in $FILES
             do
               # extension="${f##*.}"
               filename="${f%.*}"
