@@ -15,6 +15,7 @@ jobs:
             echo "${{ steps.test.outputs.files }}"
       - shell: bash
         run: | 
+          echo "${{ steps.test.outputs.files }}"
           for f in "${{ steps.test.outputs.files }}"
             do
               # extension="${f##*.}"
