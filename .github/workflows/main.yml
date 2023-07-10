@@ -7,7 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     container: pandoc/latex
     steps:
-      - run: echo "files=$(printf '%s ' *.md)" > $GITHUB_OUTPUT
+      - run: | 
+            echo "test" > test.md
+            echo "test" > test2.md
+            echo "test" > test3.md
+            echo "files=$(printf '%s ' *.md)" > $GITHUB_OUTPUT
       - run: |
           for f in ${{ steps.files_list.outputs.files }}
             do
