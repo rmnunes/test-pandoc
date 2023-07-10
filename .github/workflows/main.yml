@@ -8,7 +8,7 @@ jobs:
     container: pandoc/latex
     steps:
       - run: |
-          FILES=*.md
+          FILES=$(printf '"%s" ' *.md)"
             for f in $FILES
             do
               # extension="${f##*.}"
