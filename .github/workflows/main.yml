@@ -8,16 +8,17 @@ jobs:
 #     container: pandoc/latex
     steps:
       - uses: actions/checkout@v3
+      - id: files_list
       - run: | 
             echo "test" > test.md
             echo "test" > test2.md
             echo "test" > test3.md
             echo "files=$(printf '%s ' *.md)" > $GITHUB_OUTPUT
-            echo "${{ steps.test.outputs.files }}"
+            echo "${{ steps.files_list.outputs.files }}"
       - shell: bash
         run: | 
           echo "${{ steps.test.outputs.files }}"
-          for f in "${{ steps.test.outputs.files }}"
+          for f in "${{ steps.files_list.outputs.files }}"
             do
               # extension="${f##*.}"
               filename="${f%.*}"
