@@ -8,8 +8,9 @@ jobs:
 #     container: pandoc/latex
     steps:
       - uses: actions/checkout@v3
-      - id: files_list
-      - run: | 
+      - name: get files
+        id: files_list
+        run: | 
             echo "test" > test.md
             echo "test" > test2.md
             echo "test" > test3.md
