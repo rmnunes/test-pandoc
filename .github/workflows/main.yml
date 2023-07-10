@@ -3,24 +3,23 @@ name: test
 on: workflow_dispatch
 
 jobs:
-  test:
+  list-md:
     runs-on: ubuntu-latest
-#     container: pandoc/latex
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v3
-      - name: get files
-        id: files_list
-        run: | 
-            echo "test" > test.md
-            echo "test" > test2.md
-            echo "test" > test3.md
-            echo "files=$(printf '%s ' *.md)" > $GITHUB_OUTPUT
+      - id: set-matrix
+        run: |
+          echo "test" > test.md
+          echo "test" > test2.md
+          echo "test" > test3.md
+          echo "::set-output name=matrix::$(ls *.md | jq -R -s -c 'split("\n")[:-1]')"
+  pandoc:
+    needs: list-md
+    runs-on: ubuntu-latest
+    # container: pandoc/latex
+    strategy:
+      matrix: ${{ fromJson(needs.list-md.outputs.matrix) }}
+    steps:
       - shell: bash
-        run: | 
-          for f in ${{ steps.files_list.outputs.files }}
-            do
-              # extension="${f##*.}"
-              filename="${f%.*}"
-              echo "Converting $f to $filename.pdf"
-              `pandoc -N --variable "geometry=margin=0.8in" "$f" --pdf-engine=xelatex -o "$filename.pdf"`
-            done
+        run: pandoc -N --variable "geometry=margin=0.8in" ${{ matrix }} --pdf-engine=xelatex -o ${{ matrix }}
