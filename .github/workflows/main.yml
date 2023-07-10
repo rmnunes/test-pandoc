@@ -5,7 +5,7 @@ on: workflow_dispatch
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: pandoc/latex
+#     container: pandoc/latex
     steps:
       - run: | 
             echo "test" > test.md
