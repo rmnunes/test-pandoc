@@ -7,12 +7,5 @@ jobs:
     runs-on: ubuntu-latest
     container: pandoc/latex
     steps:
-      - run: |
-          FILES=$(printf '%s ' *.md)
-            for f in $FILES
-            do
-              # extension="${f##*.}"
-              filename="${f%.*}"
-              echo "Converting $f to $filename.pdf"
-              `pandoc -N --variable "geometry=margin=0.8in" "$f" --pdf-engine=xelatex -o "$filename.pdf"`
-            done
+      - run: echo "files=$(printf '%s ' *.md)" > $GITHUB_OUTPUT
+      - run: run.sh ${{ steps.files_list.outputs.files }}
