@@ -8,4 +8,4 @@ jobs:
     container: pandoc/latex
     steps:
       - run: echo "files=$(printf '%s ' *.md)" > $GITHUB_OUTPUT
-      - run: run.sh ${{ steps.files_list.outputs.files }}
+      - run: ${GITHUB_WORKSPACE}/.github/workflows/run.sh ${{ steps.files_list.outputs.files }}
